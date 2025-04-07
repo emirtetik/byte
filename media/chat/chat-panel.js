@@ -125,6 +125,12 @@
                 sendButton.disabled = true;
                 sendButton.classList.add('disabled');
             }
+
+            // Kaydet butonunu devre dışı bırak
+            if (saveSettingsBtn) {
+                saveSettingsBtn.disabled = true;
+                saveSettingsBtn.classList.add('disabled');
+            }
         }
     }
     
@@ -145,10 +151,16 @@
                 generatingIndicator.style.display = 'none';
             }
             
-            // Gönder butonunu tekrar etkinleştir
+            // Gönder butonunu tekrar etkinleştir 
             if (sendButton) {
                 sendButton.disabled = false;
                 sendButton.classList.remove('disabled');
+            }
+
+            // Save butonunu tekrar etkinleştir 
+            if (saveSettingsBtn) {
+                saveSettingsBtn.disabled = false;
+                saveSettingsBtn.classList.remove('disabled');
             }
         }
     }
