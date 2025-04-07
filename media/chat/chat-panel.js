@@ -430,7 +430,7 @@
         // Buton durumunu normal haline getir
         const saveButton = document.getElementById('saveSettingsBtn');
         saveButton.disabled = false;
-        saveButton.textContent = 'Kaydet';
+        saveButton.textContent = 'Save';
         saveButton.classList.remove('saving');
         
         // Başarılı mesajı göster
@@ -1403,7 +1403,10 @@
                 // Hata mesajını görüntüle
                 const errorDiv = document.createElement('div');
                 errorDiv.classList.add('error-message');
-                errorDiv.textContent = `Hata: ${message.content}`;
+                // errorDiv.textContent = `Hata: ${message.content}`;
+                let errorMessage = 'Bağlantı sağlanamadı. Lütfen ayarlarını kontrol edin ve tekrar deneyin.';
+                
+                errorDiv.textContent = `⚠️ ${errorMessage}`;
                 messagesContainer.appendChild(errorDiv);
                 
                 // Otomatik kaydır

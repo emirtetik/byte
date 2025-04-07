@@ -70,7 +70,7 @@ This project adheres to a Code of Conduct that all contributors are expected to 
    ```
 5. Build the extension:
    ```bash
-   npm run build
+   npm run compile
    ```
 6. Launch the extension in debug mode:
    ```bash
