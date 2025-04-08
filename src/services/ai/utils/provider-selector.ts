@@ -63,7 +63,12 @@ export class ProviderSelector {
             const model = config.get<string>('anthropic.model') || 'claude-3-sonnet';
             availableProviders.set(AIProvider.Anthropic, MODEL_METRICS[model]);
         }
-
+        // Deepseek API anahtarını kontrol et
+        const deepseekApiKey = await context.secrets.get('deepseek-api-key') || config.get<string>('deepseek.apiKey');
+        if (deepseekApiKey) {
+            const model = config.get<string>('deepseek.model') || 'deepseek-1.5-flash';
+            availableProviders.set(AIProvider.DeepSeek, MODEL_METRICS[model]);
+        }
         // Yerel model her zaman kullanılabilir
         availableProviders.set(AIProvider.Local, {
             costPer1kTokens: 0,
@@ -141,6 +146,9 @@ export class ProviderSelector {
                 break;
             case AIProvider.Gemini:
                 model = config.get<string>('gemini.model') || 'gemini-1.5-flash';
+                break;
+            case AIProvider.DeepSeek:
+                model = config.get<string>('deepseek.model') || 'deepseek-chat';
                 break;
             case AIProvider.Anthropic:
                 model = config.get<string>('anthropic.model') || 'claude-3-sonnet';

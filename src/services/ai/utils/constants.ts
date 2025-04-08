@@ -9,6 +9,7 @@ export const MODEL_METRICS: Record<string, ModelMetrics> = {
     'claude-3-sonnet': { costPer1kTokens: 0.008, averageResponseTime: 1200, accuracyScore: 0.90 },
     'claude-3-haiku': { costPer1kTokens: 0.003, averageResponseTime: 800, accuracyScore: 0.85 },
     'gemini-1.5-pro': { costPer1kTokens: 0.0025, averageResponseTime: 1100, accuracyScore: 0.88 },
+    'deepseek-chat': { costPer1kTokens: 0.0025, averageResponseTime: 1100, accuracyScore: 0.88 },
     'gemini-1.5-flash': { costPer1kTokens: 0.001, averageResponseTime: 500, accuracyScore: 0.82 }
 };
 
@@ -22,6 +23,10 @@ export const DEFAULT_AI_SETTINGS = {
     gemini: {
         apiKey: '',
         model: 'gemini-1.5-flash'
+    },
+    deepseek: {
+        apiKey: '',
+        model: 'deepseek-chat'
     },
     local: {
         endpoint: 'http://localhost:11434/api/generate',

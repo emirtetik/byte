@@ -12,7 +12,8 @@ import {
     OpenAIProvider, 
     GeminiProvider, 
     LocalProvider, 
-    AnthropicProvider 
+    AnthropicProvider, 
+    DeepSeekProvider
 } from './providers';
 import { AILogger } from './utils/logger';
 import { ProviderSelector } from './utils/provider-selector';
@@ -34,6 +35,7 @@ import {
 export class AIService {
     private openAIProvider: OpenAIProvider;
     private geminiProvider: GeminiProvider;
+    private deepseekProvider: DeepSeekProvider;
     private localProvider: LocalProvider;
     private anthropicProvider: AnthropicProvider;
     private providerSelector: ProviderSelector;
@@ -48,6 +50,7 @@ export class AIService {
         // Initialize all providers
         this.openAIProvider = new OpenAIProvider(context);
         this.geminiProvider = new GeminiProvider(context);
+        this.deepseekProvider = new DeepSeekProvider(context);
         this.localProvider = new LocalProvider();
         this.anthropicProvider = new AnthropicProvider(context);
         
@@ -161,6 +164,9 @@ export class AIService {
                     break;
                 case AIProvider.Local:
                     response = await this.localProvider.callLocalModel(userMessage, this.messages);
+                    break;
+                case AIProvider.DeepSeek:
+                    response = await this.deepseekProvider.callDeepSeek(userMessage, this.messages);
                     break;
                 case AIProvider.Anthropic:
                     response = await this.anthropicProvider.callAnthropic(userMessage, this.messages);
@@ -322,6 +328,10 @@ export class AIService {
                 endpoint: config.get<string>('local.endpoint') || 'http://localhost:11434/api/generate',
                 model: config.get<string>('local.model') || 'llama2'
             },
+            deepseek: {
+                apiKey: await this.deepseekProvider.getApiKey() || '',
+                model: config.get<string>('gemini.model') || 'deepseek-chat'
+            },
             anthropic: {
                 apiKey: await this.anthropicProvider.getApiKey() || '',
                 model: config.get<string>('anthropic.model') || 'claude-3-sonnet'
@@ -368,6 +378,12 @@ export class AIService {
             }
         }
         
+         // Deepseek ayarlarını güncelle
+         if (settings.deepseek) {
+            if (settings.deepseek.apiKey) {
+                await this.deepseekProvider.setApiKey(settings.deepseek.apiKey);
+            }
+        }
         // Anthropic ayarlarını güncelle
         if (settings.anthropic) {
             if (settings.anthropic.apiKey) {
@@ -389,6 +405,10 @@ export class AIService {
     
     public async setGeminiApiKey(apiKey: string): Promise<void> {
         await this.geminiProvider.setApiKey(apiKey);
+    }
+
+    public async setDeepSeekApiKey(apiKey: string): Promise<void> {
+        await this.deepseekProvider.setApiKey(apiKey);
     }
     
     public async setAnthropicApiKey(apiKey: string): Promise<void> {

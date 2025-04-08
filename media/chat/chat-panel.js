@@ -38,9 +38,11 @@
     // API Anahtarı Giriş Alanları
     const openaiApiKeyInput = document.getElementById('openaiApiKey');
     const geminiApiKeyInput = document.getElementById('geminiApiKey');
+    const deepseekApiKeyInput = document.getElementById('deepseekApiKey');
     const localEndpointInput = document.getElementById('localEndpoint');
     const openaiModelSelect = document.getElementById('openaiModel');
     const geminiModelSelect = document.getElementById('geminiModel');
+    const deepseekModelSelect = document.getElementById('deepseekModel');
     const localModelSelect = document.getElementById('localModel');
     const saveHistoryCheckbox = document.getElementById('saveHistory');
     
@@ -75,6 +77,10 @@
             anthropic: {
                 apiKey: '',
                 model: 'claude-3-opus'
+            },
+            deepseek: {
+                apiKey: '',
+                model: 'deepseek-chat'
             },
             local: {
                 endpoint: 'http://localhost:11434/api/generate',
@@ -308,6 +314,9 @@
         geminiApiKeyInput.value = state.settings.gemini?.apiKey || '';
         geminiModelSelect.value = state.settings.gemini?.model || 'gemini-2.0-flash';
         
+        deepseekApiKeyInput.value = state.settings.deepseek?.apiKey || '';
+        deepseekModelSelect.value = state.settings.deepseek?.model || 'deepseek-chat';
+
         // Anthropic ayarları - eğer form alanları varsa
         const anthropicApiKeyInput = document.getElementById('anthropicApiKey');
         const anthropicModelSelect = document.getElementById('anthropicModel');
@@ -379,6 +388,10 @@
             anthropic: {
                 apiKey: document.getElementById('anthropicApiKey')?.value || '',
                 model: document.getElementById('anthropicModel')?.value || 'claude-3-opus'
+            },
+            deepseek: {
+                apiKey: deepseekApiKeyInput.value,
+                model: deepseekModelSelect.value
             },
             local: {
                 endpoint: localEndpointInput.value,
@@ -1072,6 +1085,7 @@
         switch (provider) {
             case 'openai': return 'OpenAI';
             case 'gemini': return 'Gemini';
+            case 'deepseek': return 'DeepSeek';
             case 'anthropic': return 'Claude';
             case 'local': return 'Ollama';
             default: return provider;
@@ -1106,6 +1120,7 @@
             case 'claude-3-opus': return 'Claude-3O';
             case 'claude-3-sonnet': return 'Claude-3S';
             case 'claude-3-haiku': return 'Claude-3H';
+            case 'deepseek-chat': return 'DeepSeek-V3';
             // Yerel modeller için
             case 'llama3': return 'Llama-3';
             case 'llama2': return 'Llama-2';
@@ -1513,6 +1528,7 @@
                     if (!state.settings.openai) state.settings.openai = {apiKey: '', model: 'gpt-3.5-turbo'};
                     if (!state.settings.gemini) state.settings.gemini = {apiKey: '', model: 'gemini-1.5-pro'};
                     if (!state.settings.anthropic) state.settings.anthropic = {apiKey: '', model: 'claude-3-opus'};
+                    if (!state.settings.deepseek) state.settings.deepseek = {apiKey: '', model: 'deepseek-chat'};
                     if (!state.settings.local) state.settings.local = {endpoint: 'http://localhost:11434/api/generate', model: 'llama3'};
                     
                     // Başlıktaki provider gösterimini güncelle - doğru model bilgisini göstermek için

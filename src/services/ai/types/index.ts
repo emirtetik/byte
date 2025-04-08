@@ -3,7 +3,8 @@ export enum AIProvider {
     OpenAI = 'openai',
     Gemini = 'gemini',
     Local = 'local',
-    Anthropic = 'anthropic'
+    Anthropic = 'anthropic',
+    DeepSeek = 'deepseek'
 }
 
 // Ollama API yanıt tipi
@@ -46,6 +47,10 @@ export interface AISettings {
         model: string;
     };
     anthropic: {
+        apiKey: string;
+        model: string;
+    };
+    deepseek: {
         apiKey: string;
         model: string;
     };

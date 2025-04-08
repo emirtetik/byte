@@ -63,6 +63,10 @@ export class SettingsManager {
                     await this.aiService.setAnthropicApiKey(settings.anthropic.apiKey);
                 }
                 
+                if (settings.deepseek.apiKey) {
+                    await this.aiService.setDeepSeekApiKey(settings.deepseek.apiKey);
+                }
+
                 // Ayarları güncelle
                 await this.aiService.updateSettings(settings);
                 

@@ -15,6 +15,7 @@ export class ConfigureAIHandler implements CommandHandler {
                 { label: 'OpenAI', description: 'GPT modelleri ile güçlü AI yanıtları' },
                 { label: 'Google Gemini', description: 'Google\'ın Gemini AI modelleri' },
                 { label: 'Anthropic', description: 'Claude modelleri' },
+                { label: 'Deepseek', description: 'DeepSeek modelleri' },
                 { label: 'Yerel Model', description: 'Kendi sunucunuzda çalışan özel AI modeli' }
             ],
             {
@@ -73,6 +74,19 @@ export class ConfigureAIHandler implements CommandHandler {
                 }
                 break;
                 
+                case 'DeepSeek':
+                    const deepseekKey = await vscode.window.showInputBox({
+                        prompt: 'Deepseek API anahtarınızı girin',
+                        password: true,
+                        ignoreFocusOut: true
+                    });
+                    
+                    if (deepseekKey) {
+                        await this.aiService.setDeepSeekApiKey(deepseekKey);
+                        this.aiService.setProvider(AIProvider.DeepSeek);
+                        vscode.window.showInformationMessage('DeepSeek yapılandırması tamamlandı.');
+                    }
+                    break;
             case 'Yerel Model':
                 const localEndpoint = await vscode.window.showInputBox({
                     prompt: 'Yerel AI servis endpoint URL\'inizi girin',
