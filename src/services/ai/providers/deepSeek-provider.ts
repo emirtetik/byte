@@ -24,21 +24,20 @@ export class DeepSeekProvider {
         }
         
         const formattedMessages = this.formatMessages(messages);
-        formattedMessages.push({ role: 'system', content: userMessage });
+        formattedMessages.push({ role: 'user', content: userMessage });
         this.logger.log('Sending DeepSeek API request...');
         
         try {
             const config = vscode.workspace.getConfiguration('byte');
             const model = config.get<string>('deepseek.model') || 'deepseek-chat';
-            this.logger.log(`model ${model}`);
-            const response = await fetch('https://api.deepseek.com', {
+            const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${apiKey}`
                 },
                 body: JSON.stringify({
-                    model: "deepseek-chat",
+                    model: model,
                     messages: formattedMessages,
                     temperature: 0.7
                 })
